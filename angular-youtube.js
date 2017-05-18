@@ -34,7 +34,8 @@
 				return img;
 			}
 
-			function embedVideo() {
+			function embedVideo(event) {
+				event.stopPropagation();
 				var src = 'https://www.youtube.com/embed/' + $scope.videoId + '?autoplay=1&rel=0';
 				var iframe = angular.element('<iframe src="' + src + '" frameborder="0"></iframe>');
 				$element.empty();
