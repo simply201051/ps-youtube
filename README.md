@@ -4,8 +4,8 @@ AngularJS 延遲載入 Youtube 影片
 ## Usage
   -load js
   ```html
-  <script src="angular.js"></script>
-  <script src="ps-youtube.min.js"></script>
+  <script src="./angular.js"></script>
+  <script src="./angular-youtube.min.js"></script>
   ```
 
   -module
