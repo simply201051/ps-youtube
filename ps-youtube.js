@@ -10,7 +10,6 @@
 			scope: {
 				videoId: '=',
 				videoNmae: '=',
-				autoplay: '@'
 			},
 			template: '<button class="play-button"></button>',
 			link: link
@@ -36,8 +35,7 @@
 			}
 
 			function embedVideo() {
-				var autoplay = $scope.autoplay || 1;
-				var src = 'https://www.youtube.com/embed/' + $scope.videoId + '?autoplay=' + autoplay + '&rel=0';
+				var src = 'https://www.youtube.com/embed/' + $scope.videoId + '?autoplay=1&rel=0';
 				var iframe = angular.element('<iframe src="' + src + '" frameborder="0"></iframe>');
 				$element.empty();
 				$element.append(iframe);
