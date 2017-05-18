@@ -27,7 +27,7 @@
 			}
 
 			function createImage() {
-				var file = ['mq', 'hq', 'sd', 'max'].indexOf($attrs.quality) !== -1 ? $attrs.quality + 'default.jpg' : 'sddefault.jpg';
+				var file = ['mq', 'hq', 'sd', 'max'].indexOf($attrs.videoQuality) !== -1 ? $attrs.videoQuality + 'default.jpg' : 'sddefault.jpg';
 				var src = '//img.youtube.com/vi/' + $scope.videoId + '/' + file;
 				var alt = $scope.videoName || 'youtube video';
 				var img = angular.element('<img src="' + src + '" alt=' + alt + '>');
