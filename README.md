@@ -1,5 +1,5 @@
 # ps-youtube
-AngularJS 延遲載入 Youtube 影片
+AngularJS lazy load youtube video
 
 ## Usage
   -load js
@@ -14,15 +14,19 @@ AngularJS 延遲載入 Youtube 影片
   ```
   -html
   ```html
-  <div ps-youtube video-id="videoId" video-name="videoName"></div>
-  <!-- or -->
-  <ps-youtube video-id="videoId" video-name="videoName" video-quantity="max"></ps-youtube>
+  <!-- use variable -->
+  <div ps-youtube video-id="video.id"></div>
+  <!-- or string -->
+  <div ps-youtube video-id="'your video id'"></div>
   ```
 ## Directive options
-  - `video-id` 影片ID  
-  - `video-name` 影片名稱，用於替代圖片 `<img>` 的 alt 。  
-  - `video-quality` 替代圖片解析度<br/>
+  - `video-id` video id is required
+  - `video-name` video name add this attribute to `<img alt="videoName">`
+  - `video-quality` image quality<br/>
     1. `mq` 320×180<br/>
     2. `hq` 480×360<br/>
-    3. `sd` 640×480 預設值<br/>
+    3. `sd` 640×480 `default`<br/>
     4. `max` 1920×1080<br/>
+
+## Reference
+  [How to “Lazy Load” Embedded YouTube Videos](https://webdesign.tutsplus.com/tutorials/how-to-lazy-load-embedded-youtube-videos--cms-26743)
