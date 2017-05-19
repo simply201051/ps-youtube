@@ -25,7 +25,7 @@ AngularJS 延遲載入 Youtube 影片
     1. `mq` 320×180<br/>
     2. `hq` 480×360<br/>
     3. `sd` 640×480 預設值<br/>
-    4. `max` 1920×1080<br/>
+    4. `max` 1920×1080<br/>
 
 ## Reference
   [How to “Lazy Load” Embedded YouTube Videos](https://webdesign.tutsplus.com/tutorials/how-to-lazy-load-embedded-youtube-videos--cms-26743)
