@@ -1,4 +1,5 @@
 (function(angular, document, window) {
+	"use strict";
 	angular
 		.module("ps-youtube", [])
 		.factory('youtubePlayer', youtubePlayer)
