@@ -65,7 +65,6 @@
 					autoplay: 1,
 					rel: 0
 				}, $scope.playerOptions);
-				console.log($scope.playerVars);
 				$element.empty();
 				$element.append(embed);
 				$scope.player = new YT.Player(id, {
