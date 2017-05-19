@@ -94,8 +94,10 @@
 				}
 
 				function onPlayerStateChange(event) {
-					if (event.data === 1) youtubePlayer.pausePlayingVideo();
-					$scope.player.state = event.data;
+					var state = event.data;
+					if (state === 1) youtubePlayer.pausePlayingVideo();
+					$scope.player.state = state;
+					$scope.$emit("youtube.stateChange");
 				}
 			}
 		}
