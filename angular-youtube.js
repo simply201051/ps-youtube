@@ -3,24 +3,31 @@
 	angular.module("ps-youtube", [])
 		.factory('youtubePlayer', youtubePlayer)
 		.directive("psYoutube", psYoutube)
-		.run(YoutubeRun);
+		.run(psYoutubeRun);
 
 	function youtubePlayer() {
 		var ids = 0;
 		var youtubePlayer = {
+			addPlayer: addPlayer,
 			newElementId: newElementId,
 			players: [],
-			push: push
+			pausePlayingVideo: pausePlayingVideo
 		};
-		return youtubePlayer;
+		return youtubePlayer
+
+		function addPlayer(player) {
+			youtubePlayer.players.push(player);
+		}
 
 		function newElementId() {
 			ids++;
 			return 'youtube-' + ids;
 		}
 
-		function push(player) {
-			youtubePlayer.players.push(player);
+		function pausePlayingVideo() {
+			youtubePlayer.players.forEach(function(player) {
+				if (player.state === 1) player.pauseVideo();
+			})
 		}
 	}
 
@@ -47,7 +54,7 @@
 			function activate() {
 				$element.addClass("youtube-container");
 				$element.append(img);
-				$element.bind("click", embedVideo2);
+				$element.bind("click", embedVideo);
 			}
 
 			function createImage() {
@@ -58,7 +65,7 @@
 				return img;
 			}
 
-			function embedVideo2(event) {
+			function embedVideo(event) {
 				var id = youtubePlayer.newElementId();
 				var embed = angular.element('<div id="' + id + '"></div>');
 				var playerVars = angular.extend({
@@ -67,32 +74,36 @@
 				}, $scope.playerOptions);
 				$element.empty();
 				$element.append(embed);
-				$scope.player = new YT.Player(id, {
-					videoId: $scope.videoId,
-					playerVars: playerVars,
-					events: {
-						'onReady': onPlayerReady
-					}
-				});
+				$scope.player = newPlayer(id);
+
+				function newPlayer(id) {
+					var player = new YT.Player(id, {
+						videoId: $scope.videoId,
+						playerVars: playerVars,
+						events: {
+							'onReady': onPlayerReady,
+							'onStateChange': onPlayerStateChange
+						}
+					});
+					youtubePlayer.addPlayer(player);
+					return player;
+				}
 
 				function onPlayerReady(event) {
 					event.target.playVideo();
 				}
-			}
 
-			function embedVideo(event) {
-				event.stopPropagation();
-				var src = "https://www.youtube.com/embed/" + $scope.videoId + "?autoplay=1&rel=0";
-				var iframe = angular.element('<iframe src="' + src + '" frameborder="0"></iframe>');
-				$element.empty();
-				$element.append(iframe);
+				function onPlayerStateChange(event) {
+					if (event.data === 1) youtubePlayer.pausePlayingVideo();
+					$scope.player.state = event.data;
+				}
 			}
 		}
 	}
 
-	YoutubeRun.$inject = ['$rootScope'];
+	psYoutubeRun.$inject = ['$rootScope'];
 
-	function YoutubeRun($rootScope) {
+	function psYoutubeRun($rootScope) {
 		loadYoutubeApi();
 		appendStyle();
 
