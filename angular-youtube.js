@@ -1,7 +1,6 @@
 (function(angular, document, window) {
 	"use strict";
-	angular
-		.module("ps-youtube", [])
+	angular.module("ps-youtube", [])
 		.factory('youtubePlayer', youtubePlayer)
 		.directive("psYoutube", psYoutube)
 		.run(YoutubeRun);
@@ -11,7 +10,7 @@
 		var youtubePlayer = {
 			newElementId: newElementId,
 			players: [],
-			push: push,
+			push: push
 		};
 		return youtubePlayer;
 
@@ -32,7 +31,7 @@
 			restrict: "EA",
 			scope: {
 				player: "=psYoutube",
-				playerVars: '=',
+				playerOptions: '=playerOptions',
 				videoId: "=",
 				videoNmae: "="
 			},
@@ -48,32 +47,46 @@
 			function activate() {
 				$element.addClass("youtube-container");
 				$element.append(img);
-				$element.bind("click", embedVideo);
+				$element.bind("click", embedVideo2);
 			}
 
 			function createImage() {
-				var file = ["mq", "hq", "sd", "max"].indexOf($attrs.videoQuality) !== -1 ?
-					$attrs.videoQuality + "default.jpg" :
-					"sddefault.jpg";
+				var file = ["mq", "hq", "sd", "max"].indexOf($attrs.videoQuality) !== -1 ? $attrs.videoQuality + "default.jpg" : "sddefault.jpg";
 				var src = "//img.youtube.com/vi/" + $scope.videoId + "/" + file;
 				var alt = $scope.videoName || "youtube video";
 				var img = angular.element('<img src="' + src + '" alt=' + alt + ">");
 				return img;
 			}
 
-			function embedVideo(event) {
+			function embedVideo2(event) {
 				var id = youtubePlayer.newElementId();
 				var embed = angular.element('<div id="' + id + '"></div>');
 				var playerVars = angular.extend({
 					autoplay: 1,
 					rel: 0
-				}, $scope.playerVars);
+				}, $scope.playerOptions);
+				console.log($scope.playerVars);
 				$element.empty();
 				$element.append(embed);
 				$scope.player = new YT.Player(id, {
 					videoId: $scope.videoId,
 					playerVars: playerVars,
+					events: {
+						'onReady': onPlayerReady
+					}
 				});
+
+				function onPlayerReady(event) {
+					event.target.playVideo();
+				}
+			}
+
+			function embedVideo(event) {
+				event.stopPropagation();
+				var src = "https://www.youtube.com/embed/" + $scope.videoId + "?autoplay=1&rel=0";
+				var iframe = angular.element('<iframe src="' + src + '" frameborder="0"></iframe>');
+				$element.empty();
+				$element.append(iframe);
 			}
 		}
 	}
