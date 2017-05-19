@@ -14,9 +14,9 @@ AngularJS 延遲載入 Youtube 影片
   ```
   -html
   ```html
-  <div ps-youtube video-id="videoId" video-name="videoName"></div>
+  <div ps-youtube video-id="videoId"></div>
   <!-- or -->
-  <ps-youtube video-id="videoId" video-name="videoName" video-quantity="max"></ps-youtube>
+  <ps-youtube video-id="videoId"></ps-youtube>
   ```
 ## Directive options
   - `video-id` 影片ID  
