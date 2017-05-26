@@ -40,7 +40,7 @@
 				player: "=psYoutube",
 				playerOptions: '=playerOptions',
 				videoId: "=",
-				videoNmae: "="
+				videoName: "="
 			},
 			template: '<button class="play-button"></button>',
 			link: link
