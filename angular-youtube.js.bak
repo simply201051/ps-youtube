@@ -11,8 +11,7 @@
 			addPlayer: addPlayer,
 			newElementId: newElementId,
 			players: [],
-			pausePlayingVideo: pausePlayingVideo,
-			ready: false
+			pausePlayingVideo: pausePlayingVideo
 		};
 		return youtubePlayer
 
@@ -50,11 +49,11 @@
 
 		function link($scope, $element, $attrs) {
 			var img = createImage();
-			$element.addClass("youtube-container");
-			$element.append(img);
-			activate();
+			$scope.$on('youtube.ready', activate);
 
 			function activate() {
+				$element.addClass("youtube-container");
+				$element.append(img);
 				$element.bind("click", embedVideo);
 			}
 
@@ -67,7 +66,6 @@
 			}
 
 			function embedVideo(event) {
-				if (!youtubePlayer.ready) return;
 				var id = youtubePlayer.newElementId();
 				var embed = angular.element('<div id="' + id + '"></div>');
 				var playerVars = angular.extend({
@@ -105,9 +103,9 @@
 		}
 	}
 
-	psYoutubeRun.$inject = ['$rootScope', 'youtubePlayer'];
+	psYoutubeRun.$inject = ['$rootScope'];
 
-	function psYoutubeRun($rootScope, youtubePlayer) {
+	function psYoutubeRun($rootScope) {
 		loadYoutubeApi();
 		appendStyle();
 
@@ -117,12 +115,12 @@
 			var firstScriptTag = document.getElementsByTagName("script")[0];
 			firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 			window.onYouTubeIframeAPIReady = function() {
-				youtubePlayer.ready = true;
+				$rootScope.$broadcast("youtube.ready");
 			};
 		}
 
 		function appendStyle() {
-			var style = '.youtube-container{position:relative;display:block;padding-top:56.25%;background-color:#000;overflow:hidden}.youtube-container .play-button{width:90px;height:60px;background-color:#333;box-shadow:0 0 30px rgba(0,0,0,.6);z-index:1;opacity:.8;border-radius:6px}.youtube-container img{width:100%;top:-16.82%;left:0;opacity:.7}.youtube-container .play-button:before{content:"";border-style:solid;border-width:15px 0 15px 26px;border-color:transparent transparent transparent #fff}.youtube-container .play-button,.youtube-container img{cursor:pointer}.youtube-container .play-button,.youtube-container .play-button:before,.youtube-container iframe,.youtube-container img{position:absolute}.youtube-container .play-button,.youtube-container .play-button:before{top:50%;left:50%;transform:translate(-50%,-50%);-webkit-transform:translate(-50%,-50%);-moz-transform:translate(-50%,-50%);-ms-transform:translate(-50%,-50%);-o-transform:translate(-50%,-50%)}.youtube-container iframe{height:100%;width:100%;top:0;left:0}';
+			var style = '.youtube-container{position:relative;padding-top:56.25%;background-color:#000;overflow:hidden}.youtube-container .play-button{width:90px;height:60px;background-color:#333;box-shadow:0 0 30px rgba(0,0,0,.6);z-index:1;opacity:.8;border-radius:6px}.youtube-container img{width:100%;top:-16.82%;left:0;opacity:.7}.youtube-container .play-button:before{content:"";border-style:solid;border-width:15px 0 15px 26px;border-color:transparent transparent transparent #fff}.youtube-container .play-button,.youtube-container img{cursor:pointer}.youtube-container .play-button,.youtube-container .play-button:before,.youtube-container iframe,.youtube-container img{position:absolute}.youtube-container .play-button,.youtube-container .play-button:before{top:50%;left:50%;transform:translate(-50%,-50%);-webkit-transform:translate(-50%,-50%);-moz-transform:translate(-50%,-50%);-ms-transform:translate(-50%,-50%);-o-transform:translate(-50%,-50%)}.youtube-container iframe{height:100%;width:100%;top:0;left:0}';
 			var styleElement = angular.element('<style type="text/css">' + style + "</style>");
 			angular.element(document)
 				.find("head")
