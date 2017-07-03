@@ -38,7 +38,7 @@
 		var youtube = {
 			restrict: "EA",
 			scope: {
-				player: "=psYoutube",
+				player: "=?psYoutube",
 				playerOptions: '=playerOptions',
 				videoId: "=",
 				videoName: "="
