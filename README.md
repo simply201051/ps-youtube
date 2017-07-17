@@ -27,7 +27,7 @@ AngularJS lazy load youtube video
     1. `mq` 320×180<br/>
     2. `hq` 480×360<br/>
     3. `sd` 640×480 `default`<br/>
-    4. `max` 1920×1080<br/>
+    4. `maxres` 1920×1080<br/>
   - `player-options` default { autoplay: 1, rel: 0 }<br/>
   refer [youtube player parameters](https://developers.google.com/youtube/player_parameters)
 
