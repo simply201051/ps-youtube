@@ -43,7 +43,7 @@
 				videoId: "=",
 				videoName: "="
 			},
-			template: '<button class="play-button"></button>',
+			template: '<button class="play-button" aria-label="play"></button>',
 			link: link
 		};
 		return youtube;
